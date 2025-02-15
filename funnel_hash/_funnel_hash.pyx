@@ -184,21 +184,21 @@ cdef class FunnelHashTable:
     
     def items(self) -> Generator[(object, object), None, None]:
         for level in self.levels:
-            for _Entry in level:
-                if _Entry.occupied:
-                    yield _Entry.key, _Entry.value
+            for entry in level:
+                if entry.occupied:
+                    yield entry.key, entry.value
 
-        for _Entry in self.special_array:
-            if _Entry.occupied:
-                yield _Entry.key, _Entry.value
+        for entry in self.special_array:
+            if entry.occupied:
+                yield entry.key, entry.value
     
     def keys(self) -> Generator[object, None, None]:
-        for _Entry in self.items():
-            yield _Entry[0]
+        for key, _ in self.items():
+            yield key
     
     def values(self) -> Generator[object, None, None]:
-        for _Entry in self.items():
-            yield _Entry[1]
+        for _, value in self.items():
+            yield value
 
     def __getitem__(self, key) -> object:
         return self.get(key)
